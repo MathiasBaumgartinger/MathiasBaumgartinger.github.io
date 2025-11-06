@@ -55,147 +55,48 @@ ninja.data = [{
             window.location.href = "/blog/2025/knox+refresh/";
           
         },
-      },{id: "post-a-post-with-plotly-js",
+      },{id: "post-start-der-biopv-labs-gemeinsam-die-zukunft-gestalten-biopv",
         
-          title: "a post with plotly.js",
+          title: 'Start der BioPV-Labs: Gemeinsam die Zukunft gestalten! | BioPV <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         
-        description: "this is what included plotly.js code could look like",
+        description: "Erfahrungsaustausch und partizipatives Planen standen im Fokus der ersten BioPV-Labs, die im März und April in den Biosphärenparks Lungau und Unteres Murtal stattfanden. Stakeholder aus Regional- und Kommunalmanagement, Planung, Umsetzung und Naturschutz sowie interessierte Bürger:innen kamen zusammen, um Ideen zu entwickeln, auszutauschen und gemeinsam zu planen.",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/plotly/";
+            window.open("https://biopv.boku.ac.at/post/25-04-22-workshops-lungau-unteres-murtal/", "_blank");
           
         },
-      },{id: "post-a-post-with-image-galleries",
+      },{id: "post-engaging-the-local-community-wimby-workshops-in-styria",
         
-          title: "a post with image galleries",
+          title: 'Engaging the local community: WIMBY workshops in Styria <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         
-        description: "this is what included image galleries could look like",
+        description: "Discover how WIMBY’s workshops and activities in Styria, Austria, fostered local engagement around wind energy projects.",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/photo-gallery/";
+            window.open("https://wimby.eu/engaging-the-local-community-wimby-workshops-in-styria/", "_blank");
           
         },
-      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+      },{id: "post-istanbul-the-bridge-between-europe-and-asia",
         
-          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+          title: "Istanbul -- the bridge between Europe and Asia",
         
-        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        description: "Last stop of 5 months of travel in the &quot;center of the world&quot;: a week in Istanbul.",
         section: "Posts",
         handler: () => {
           
-            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+            window.location.href = "/blog/2024/istanbul/";
           
         },
-      },{id: "post-a-post-with-tabs",
+      },{id: "post-pretend-a-mouse-vr-gui-in-godot",
         
-          title: "a post with tabs",
+          title: "Pretend a Mouse: VR-GUI in Godot",
         
-        description: "this is what included tabs in a post could look like",
+        description: "How I cheated my way to VR-friendly UI in Godot by raycasting into a mesh, projecting into a viewport -- and then faking mouse events.",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/tabs/";
-          
-        },
-      },{id: "post-a-post-with-typograms",
-        
-          title: "a post with typograms",
-        
-        description: "this is what included typograms code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/typograms/";
-          
-        },
-      },{id: "post-a-post-that-can-be-cited",
-        
-          title: "a post that can be cited",
-        
-        description: "this is what a post that can be cited looks like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/post-citation/";
-          
-        },
-      },{id: "post-a-post-with-pseudo-code",
-        
-          title: "a post with pseudo code",
-        
-        description: "this is what included pseudo code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/pseudocode/";
-          
-        },
-      },{id: "post-a-post-with-vega-lite",
-        
-          title: "a post with vega lite",
-        
-        description: "this is what included vega lite code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/vega-lite/";
-          
-        },
-      },{id: "post-a-post-with-custom-blockquotes",
-        
-          title: "a post with custom blockquotes",
-        
-        description: "an example of a blog post with custom blockquotes",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/custom-blockquotes/";
-          
-        },
-      },{id: "post-displaying-beautiful-tables-with-bootstrap-tables",
-        
-          title: "displaying beautiful tables with Bootstrap Tables",
-        
-        description: "an example of how to use Bootstrap Tables",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/tables/";
-          
-        },
-      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
-        
-          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
-          
-        },
-      },{id: "post-a-distill-style-blog-post",
-        
-          title: "a distill-style blog post",
-        
-        description: "an example of a distill-style blog post and main elements",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2021/distill/";
-          
-        },
-      },{id: "post-a-post-with-code",
-        
-          title: "a post with code",
-        
-        description: "an example of a blog post with some code",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/code/";
+            window.location.href = "/blog/2022/godot-vr-ui/";
           
         },
       },{id: "books-the-godfather",
@@ -203,16 +104,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-as-of-today-i-am-officially-looking-for-new-job-opportunities-in-the-field-computer-science-software-development-data-science-and-or-gis-contact-me-via-email-or-linkedin-if-you-have-an-interesting-position-to-offer-or-want-to-collaborate-on-exciting-projects",
+          title: 'As of today I am officially looking for new job opportunities in the...',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-finally-my-updated-personalized-website-is-live-built-with-jekyll-by-extending-the-al-folio-theme-it-serves-as-my-online-business-card-showcasing-my-profile-curriculum-vitae-personal-blog-projects-and-repositories-research-and-publications-check-it-out-at-mathias-toothgap-at-and-stay-tuned-for-updates",
+          title: 'Finally, my updated personalized website is live! Built with Jekyll by extending the...',
           description: "",
           section: "News",},{id: "projects-biopv",
           title: 'BioPV',
