@@ -77,6 +77,17 @@ ninja.data = [{
             window.open("https://wimby.eu/engaging-the-local-community-wimby-workshops-in-styria/", "_blank");
           
         },
+      },{id: "post-a-simpler-solution-to-many-github-large-file-issues",
+        
+          title: "A simpler solution to [many] GitHub large file issues",
+        
+        description: "`remote: error: File [filename] is 200.00 MB; this exceeds GitHub&#39;s file size limit of 100.00 MB` -- how to fix it without Git LFS.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/github-about-large-files/";
+          
+        },
       },{id: "post-istanbul-the-bridge-between-europe-and-asia",
         
           title: "Istanbul: the bridge between Europe and Asia",
