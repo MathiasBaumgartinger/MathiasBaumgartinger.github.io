@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-extending-django-knox-by-secure-refresh-tokens",
+        },{id: "post-writing-scientific-latex-from-markdown",
+        
+          title: "Writing Scientific LaTeX from Markdown",
+        
+        description: "Turn Markdown into publication-ready LaTeX/PDF without sacrificing citation handling, figure numbering, or layout control.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/scientific-markdown/";
+          
+        },
+      },{id: "post-extending-django-knox-by-secure-refresh-tokens",
         
           title: "Extending Django Knox by secure refresh-tokens",
         
