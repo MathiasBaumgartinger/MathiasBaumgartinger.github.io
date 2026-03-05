@@ -54,9 +54,9 @@ _____
 ## Project layout
 
 ```
-my‑paper/
+my_paper/
 ├─ chapters/
-│   ├─ 01‑introduction.md
+│   ├─ 01_introduction.md
 │   └─ … 
 ├─ bib.yaml          # bibliography database (BibTeX/YAML)
 ├─ ieee.csl          # citation style
@@ -160,7 +160,7 @@ Create a bibliography yaml or export it from Zotero (see next section). This fil
 
 From Zotero, export a collection as "Better CSL YAML". This keeps the file updated just like bibLaTeX.
 
-{% include figure.liquid loading="eager" path="assets/img/blog/markdown-scientific/export_zot.png" title="Zotero CSL yaml export" class="img-fluid rounded z-depth-1" width="50%" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/markdown-scientific/export_zot.png" title="Zotero CSL yaml export" class="img-fluid rounded z-depth-1" width="30%" %}
 
 ### Get a Citation Style
 
@@ -217,5 +217,5 @@ Lastly, a build script includes the chapters into a temporary file which we buil
 ### Why this order?
 
 `m4` runs first to resolve all include directives.
-Pandoc reads the flattened markdown, applies the filters, and finally hands the resulting .tex to pdflatex.
-The --filter pandoc-crossref call enables seamless equation referencing ((@eq:mylabel)), while pandoc-fignos, pandoc-secnos, and pandoc-xnos take care of figures, sections, and generic counters respectively.
+Pandoc reads the flattened markdown, applies the filters, and finally hands the resulting `.tex` to pdflatex.
+The `--filter pandoc-crossref` call enables seamless equation referencing (`@eq:mylabel`), while `pandoc-fignos`, `pandoc-secnos`, and `pandoc-xnos` take care of figures, sections, and generic counters respectively.
