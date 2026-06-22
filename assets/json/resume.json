@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "Mathias Baumgartinger-Seiringer",
-    "label": "<i class='fa-solid fa-code'></i> Computer Scientist. <i class='fa-solid fa-book'></i> Academic.",
+    "label": "<i class='fa-solid fa-code'></i> Software Engineer. <i class='fa-solid fa-book'></i> Researcher.",
     "image": "",
     "email": "mathias.baumgartinger@proton.me",
     "phone": "+43 680 1311072",
     "url": "https://mathias.toothgap.at",
-    "summary": "My name is Mathias Baumgartinger-Seiringer. I am a creative developer that is passionate about craftsmanship surrounding software, games and other digital creations. Also, I am a firm believer in free and open source tools.",
+    "summary": "I am a software engineer specializing in complex geospatial systems and energy infrastructure. With a focus on robust architecture and secure implementation, I build custom solutions where standard tools fall short. I am a strong advocate for open-source technologies as a driver for transparency and innovation in critical sectors.",
     "location": {
       "address": "Huglgasse 26",
       "postalCode": "1150",
@@ -24,9 +24,20 @@
   },
   "work": [
     {
+      "name": "synapsyx",
+      "logo": "assets/img/employers/synapsyx.png",
+      "position": "Freelance Software Consultant",
+      "location": "Austria, Vienna",
+      "url": "https://synapsyx.com",
+      "startDate": "2025-03-01",
+      "endDate": "2026-01-01",
+      "summary": "• Supported software concept development for AI-enabled automation use cases.\n• Evaluated tooling, architectures, and integration options for applied AI workflows.\n• Development of AI-supported tool for career orientation and entrepreneurship reflection: ePATH.\n• Set up and maintained CI/CD workflows for deploying ePATH to a production server.",
+      "highlights": ["Software-Infrastructure", "Software-Design", "AI-Integration", "LLM", "CI/CD", "Docker"]
+    },
+    {
       "name": "BOKU University",
       "logo": "assets/img/employers/boku_new.png",
-      "position": "Research Associate",
+      "position": "Project Associate",
       "location": "Austria, Vienna",
       "url": "https://boku.ac.at/lawi/ilen",
       "startDate": "2021-10-15",
@@ -371,6 +382,14 @@
     }
   ],
   "projects": [
+    {
+      "name": "ePATH - Empowering People in their Career and Entrepreneurship Journey",
+      "summary": "Development of an AI-supported tool for career orientation and entrepreneurship reflection, designed to empower individuals in navigating their career paths and entrepreneurial endeavors.",
+      "highlights": ["AI Integration", "Career Orientation", "Entrepreneurship Support", "User-Centered Design"],
+      "url": "https://synapsyx.com",
+      "startDate": "2025-03-01",
+      "endDate": "2026-01-01"
+    },
     {
       "name": "WIMBY - Wind in My Backyard",
       "summary": "Development of innovative tools to facilitate citizen and stakeholders interaction, knowledge sharing, and collaborative evaluation of impacts, conflicts, synergies and social innovation potential of wind energy.",
