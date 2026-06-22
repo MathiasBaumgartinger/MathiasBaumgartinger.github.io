@@ -44,18 +44,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-writing-scientific-latex-from-markdown",
-        
-          title: "Writing Scientific LaTeX from Markdown",
-        
-        description: "Turn Markdown into publication-ready LaTeX/PDF without sacrificing citation handling, figure numbering, or layout control.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/scientific-markdown/";
-          
-        },
-      },{id: "post-extending-django-knox-by-secure-refresh-tokens",
+        },{id: "post-extending-django-knox-by-secure-refresh-tokens",
         
           title: "Extending Django Knox by secure refresh-tokens",
         
@@ -88,48 +77,15 @@ ninja.data = [{
             window.open("https://wimby.eu/engaging-the-local-community-wimby-workshops-in-styria/", "_blank");
           
         },
-      },{id: "post-a-simpler-solution-to-many-github-large-file-issues",
-        
-          title: "A simpler solution to [many] GitHub large file issues",
-        
-        description: "`remote: error: File [filename] is 200.00 MB; this exceeds GitHub&#39;s file size limit of 100.00 MB` -- how to fix it without Git LFS.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/github-about-large-files/";
-          
-        },
       },{id: "post-istanbul-the-bridge-between-europe-and-asia",
         
-          title: "Istanbul: the bridge between Europe and Asia",
+          title: "Istanbul -- the bridge between Europe and Asia",
         
         description: "Last stop of 5 months of travel in the &quot;center of the world&quot;: a week in Istanbul.",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2024/istanbul/";
-          
-        },
-      },{id: "post-vietnam-my-first-culture-shock-positive",
-        
-          title: "Vietnam: my first culture shock (positive)",
-        
-        description: "Exploring the diverse landscapes and cultures of Vietnam.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/vietnam/";
-          
-        },
-      },{id: "post-catenary-objects-putting-a-wire-between-two-points-in-3d",
-        
-          title: "Catenary objects: putting a wire between two points (in 3D)",
-        
-        description: "Modelling a hanging physically/geometrically correct chain supported only at its endpoints.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2022/catenary/";
           
         },
       },{id: "post-pretend-a-mouse-vr-gui-in-godot",
