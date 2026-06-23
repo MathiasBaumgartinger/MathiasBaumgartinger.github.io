@@ -23,7 +23,7 @@ module ExternalPosts
     end
 
     def fetch_from_rss(site, src)
-      xml = HTTParty.get(src['rss_url']).body
+      xml = fetch_url(src['rss_url'])
       return if xml.nil?
       feed = Feedjira.parse(xml)
       process_entries(site, src, feed.entries)
@@ -70,6 +70,8 @@ module ExternalPosts
       src['posts'].each do |post|
         puts "...fetching #{post['url']}"
         content = fetch_content_from_url(post['url'])
+        next if content.nil?
+
         content[:published] = parse_published_date(post['published_date'])
         create_document(site, src['name'], post['url'], content)
       end
@@ -87,7 +89,9 @@ module ExternalPosts
     end
 
     def fetch_content_from_url(url)
-      html = HTTParty.get(url).body
+      html = fetch_url(url)
+      return if html.nil?
+
       parsed_html = Nokogiri::HTML(html)
 
       title = parsed_html.at('head title')&.text.strip || ''
@@ -104,6 +108,17 @@ module ExternalPosts
         summary: description
         # Note: The published date is now added in the fetch_from_urls method.
       }
+    end
+
+    def fetch_url(url)
+      response = HTTParty.get(url, timeout: 10)
+      return response.body if response.success?
+
+      Jekyll.logger.warn 'External posts:', "skipping #{url} (HTTP #{response.code})"
+      nil
+    rescue StandardError => e
+      Jekyll.logger.warn 'External posts:', "skipping #{url} (#{e.class}: #{e.message})"
+      nil
     end
 
   end
