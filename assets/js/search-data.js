@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-extending-django-knox-by-secure-refresh-tokens",
+        },{id: "post-writing-scientific-latex-from-markdown",
+        
+          title: "Writing Scientific LaTeX from Markdown",
+        
+        description: "Turn Markdown into publication-ready LaTeX/PDF without sacrificing citation handling, figure numbering, or layout control.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/scientific-markdown/";
+          
+        },
+      },{id: "post-extending-django-knox-by-secure-refresh-tokens",
         
           title: "Extending Django Knox by secure refresh-tokens",
         
@@ -66,26 +77,48 @@ ninja.data = [{
             window.open("https://biopv.boku.ac.at/post/25-04-22-workshops-lungau-unteres-murtal/", "_blank");
           
         },
-      },{id: "post-engaging-the-local-community-wimby-workshops-in-styria",
+      },{id: "post-a-simpler-solution-to-many-github-large-file-issues",
         
-          title: 'Engaging the local community: WIMBY workshops in Styria <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+          title: "A simpler solution to [many] GitHub large file issues",
         
-        description: "Discover how WIMBY’s workshops and activities in Styria, Austria, fostered local engagement around wind energy projects.",
+        description: "`remote: error: File [filename] is 200.00 MB; this exceeds GitHub&#39;s file size limit of 100.00 MB` -- how to fix it without Git LFS.",
         section: "Posts",
         handler: () => {
           
-            window.open("https://wimby.eu/engaging-the-local-community-wimby-workshops-in-styria/", "_blank");
+            window.location.href = "/blog/2024/github-about-large-files/";
           
         },
       },{id: "post-istanbul-the-bridge-between-europe-and-asia",
         
-          title: "Istanbul -- the bridge between Europe and Asia",
+          title: "Istanbul: the bridge between Europe and Asia",
         
         description: "Last stop of 5 months of travel in the &quot;center of the world&quot;: a week in Istanbul.",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2024/istanbul/";
+          
+        },
+      },{id: "post-vietnam-my-first-culture-shock-positive",
+        
+          title: "Vietnam: my first culture shock (positive)",
+        
+        description: "Exploring the diverse landscapes and cultures of Vietnam.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/vietnam/";
+          
+        },
+      },{id: "post-catenary-objects-putting-a-wire-between-two-points-in-3d",
+        
+          title: "Catenary objects: putting a wire between two points (in 3D)",
+        
+        description: "Modelling a hanging physically/geometrically correct chain supported only at its endpoints.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/catenary/";
           
         },
       },{id: "post-pretend-a-mouse-vr-gui-in-godot",
