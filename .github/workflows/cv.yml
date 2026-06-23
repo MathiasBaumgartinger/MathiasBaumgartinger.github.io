@@ -32,14 +32,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          # Move generated PDF to a temporary location
-          mv cv.pdf assets/pdf/cv.pdf
+          # Keep the generated file outside the worktree while switching branches.
+          # gh-pages already contains assets/pdf/cv.pdf, so placing it there before
+          # checkout would leave an untracked file that blocks the checkout.
+          mv cv.pdf "$RUNNER_TEMP/cv.pdf"
 
           # Fetch gh-pages locally
           git fetch origin gh-pages:gh-pages
 
           # Check out the gh-pages branch
           git checkout gh-pages
+
+          # Add the generated PDF to the deployment branch.
+          mkdir -p assets/pdf
+          mv "$RUNNER_TEMP/cv.pdf" assets/pdf/cv.pdf
 
           # Configure commit identity (this is what you asked about)
           git config user.name  "github-actions[bot]"
