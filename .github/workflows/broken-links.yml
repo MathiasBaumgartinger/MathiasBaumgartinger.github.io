@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - main
     paths:
       - "assets/**"
       - "**.html"
@@ -22,7 +21,6 @@ on:
   pull_request:
     branches:
       - master
-      - main
     paths:
       - "assets/**"
       - "**.html"
