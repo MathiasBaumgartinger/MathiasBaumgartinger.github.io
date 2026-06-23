@@ -5,8 +5,8 @@ permalink: /
 subtitle: >
   &ensp;<i class="fa-solid fa-address-card"></i>&ensp;<a href='#'>Affiliations</a>.
   &ensp;<i class="fa-solid fa-location-dot"></i>&ensp;Vienna, Austria. 
-  &ensp;<i class="fa-solid fa-code"></i>&ensp;Computer Scientist. 
-  &ensp;<i class="fa-solid fa-book"></i>&ensp;Academic.
+  &ensp;<i class="fa-solid fa-code"></i>&ensp;Software Engineer.
+  &ensp;<i class="fa-solid fa-book"></i>&ensp;Researcher.
 
 profile:
   align: left

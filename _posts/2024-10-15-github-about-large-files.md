@@ -7,7 +7,7 @@ tags: ["software-engineering", git, github, "git large files"]
 categories: "software-engineering"
 ---
 
-*Update: In commit [`15fdef2`](https://github.com/github/docs/commit/15fdef26a6f817ed51b451173c1d05191a8dc5c2) the GitHub Docs team has added context of the provided solution to the relevant documentation.*
+_Update: In commit [`15fdef2`](https://github.com/github/docs/commit/15fdef26a6f817ed51b451173c1d05191a8dc5c2) the GitHub Docs team has added context of the provided solution to the relevant documentation._
 
 As discussed in my proposal for updating the github [docs on large files](https://github.com/github/docs/issues/34950), GitHub has a hard limit of 100 MB per file for repositories. As someone who has worked on a project with large resources files, the error message `remote: error: File [filename] is 200.00 MB; this exceeds GitHub's file size limit of 100.00 MB` has occured to me more than once or twice. This is especially frustrating when the commit with the large file is not the most recent commit, and you have to rewrite history to remove it.
 
@@ -40,4 +40,3 @@ Change `pick` to `edit` in the line of the commit to be modified. Once the file 
 ```
 
 Consequently, you may return to the original `HEAD` using `git rebase --continue` and push the smaller commits using `git push`.
-
