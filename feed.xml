@@ -1,4 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="MathiasBaumgartinger.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="MathiasBaumgartinger.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-06-23T15:00:15+00:00</updated><id>MathiasBaumgartinger.github.io/feed.xml</id><title type="html">blank</title><subtitle>My personalized academic website built with Jekyll and the al-folio theme. </subtitle><entry><title type="html">Writing Scientific LaTeX from Markdown</title><link href="MathiasBaumgartinger.github.io/blog/2026/scientific-markdown/" rel="alternate" type="text/html" title="Writing Scientific LaTeX from Markdown"/><published>2026-03-03T00:00:00+00:00</published><updated>2026-03-03T00:00:00+00:00</updated><id>MathiasBaumgartinger.github.io/blog/2026/scientific-markdown</id><content type="html" xml:base="MathiasBaumgartinger.github.io/blog/2026/scientific-markdown/"><![CDATA[<h2 id="latex-boon-and-bane">LaTeX: Boon and Bane</h2> <p>Ever since I first encountered LaTeX during my bachelor’s, I loved the clean documents LaTeX produces. The algorithmic, global paragraphing that produces even spacing feels unmatched to this day. Additionally, if you ever tried writing math notation in an text-editor like Word, LaTeX’s math notation is far superior. Its integration with better bibLaTeX and Zotero greatly eases scientific writing.</p> <p>On the other hand, writing LaTeX – especially in living documents – can feel very cumbersome. The syntactic commands and control sequences like <code class="language-plaintext highlighter-rouge">\textbf{}</code>, <code class="language-plaintext highlighter-rouge">\begin{enumerate}</code> and especially figure and table blocks like the one below pollute the plain-text and sometimes feel unnecessarily long:</p> <div class="language-LaTeX highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">\begin{figure}</span>[h]
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="MathiasBaumgartinger.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="MathiasBaumgartinger.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-06-26T11:36:50+00:00</updated><id>MathiasBaumgartinger.github.io/feed.xml</id><title type="html">blank</title><subtitle>My personalized academic website built with Jekyll and the al-folio theme. </subtitle><entry><title type="html">Moving a Small Production Stack from AWS to Hetzner</title><link href="MathiasBaumgartinger.github.io/blog/2026/aws-hetzner-mig/" rel="alternate" type="text/html" title="Moving a Small Production Stack from AWS to Hetzner"/><published>2026-06-15T00:00:00+00:00</published><updated>2026-06-15T00:00:00+00:00</updated><id>MathiasBaumgartinger.github.io/blog/2026/aws-hetzner-mig</id><content type="html" xml:base="MathiasBaumgartinger.github.io/blog/2026/aws-hetzner-mig/"><![CDATA[<p>Migrating from AWS to Hetzner can lead to significant cost savings, especially beneficial for businesses with predictable traffic and smaller user bases. Obviously: AWS managed services are expensive partly because they do real work: snapshots, maintenance windows, easier restore flows, failover options, metrics, and fewer weird Saturday mornings. However, many of these functionalities can be reproduced, especially in a modest ecosystem.</p> <p>To this day, people paste a pile of generated YAML into a terminal and call it system engineering. Pragmatic and sometimes fast, but it comes with two major drawbacks:</p> <ol> <li>not re-usable</li> <li>no implicit documentation</li> </ol> <p>Using ansible and terraform gives us as <em>Infrastructure as Code</em> (IaC): when done correctly bits and pieces are re-usable, the infrastructure becomes AI-agent compatible and IaC serves as an implicit architecture documentation. This migration was the quieter kind of work: move a modest production setup from AWS to Hetzner, keep the security shape understandable, make deployment repeatable, and cut the monthly bill by roughly <strong>EUR 600</strong> in this particular case.</p> <h2 id="tldr">TL;DR</h2> <p>The old setup used AWS: elastic container services and registry, managed database and volumes, traffic rules and networks. It worked, but the bill was out of proportion for the workload and user bases.</p> <p>The new setup uses:</p> <ul> <li>Hetzner Cloud servers for apps, databases, edge proxy, and control node.</li> <li>Caddy as the only public HTTP(S) entrypoint (edge proxy).</li> <li>A floating IP in front of the edge proxy, automatically moved to a backup edge node if the primary fails.</li> <li>One private network for server-to-server traffic.</li> <li>A control node as bastion, Ansible runner, Terraform workstation, Prometheus, and Grafana.</li> <li>Terraform for cloud resources.</li> <li>Ansible for machine state and Docker Compose deployments.</li> <li>Prometheus/Grafana monitoring applied automatically to the services during deployment.</li> <li>S3-compatible Hetzner Object Storage for Terraform state and backups.</li> </ul> <p>No magic. That is the point. Small production systems often need boring reproducibility more than they need Kubernetes cosplay.</p> <pre><code class="language-mermaid">flowchart LR
+  users[Internet users]
+  dns[Public DNS]
+  floating_ip[Floating IP&lt;br/&gt;public 80/443]
+  edge[Primary edge proxy&lt;br/&gt;Caddy + TLS]
+  edge_backup[Backup edge proxy&lt;br/&gt;Caddy standby]
+  admin[Operator laptop]
+  ci[CI system&lt;br/&gt;builds images]
+
+  subgraph hetzner[Hetzner Cloud]
+    control[Control node&lt;br/&gt;bastion + Ansible + Terraform&lt;br/&gt;Prometheus + Grafana]
+
+    subgraph private_net[Private network]
+      registry[Private container registry]
+      app_a[Learning platform]
+      app_b[Simulation app]
+      app_c[Business app]
+      db_a[(Postgres DB)]
+      db_b[(Postgres DB)]
+      object_storage[(Object Storage&lt;br/&gt;state + backups)]
+    end
+  end
+
+  users --&gt;|HTTPS| dns
+  dns --&gt; floating_ip
+  floating_ip --&gt;|normally assigned to| edge
+  floating_ip -. automatic failover .-&gt; edge_backup
+  edge --&gt;|private HTTP| app_a
+  edge --&gt;|private HTTP/API| app_b
+  edge --&gt;|private HTTP| app_c
+  edge_backup -. private HTTP .-&gt; app_a
+  edge_backup -. private HTTP/API .-&gt; app_b
+  edge_backup -. private HTTP .-&gt; app_c
+
+  admin --&gt;|SSH| control
+  control --&gt;|SSH + Ansible| edge
+  control --&gt;|SSH + Ansible| edge_backup
+  control --&gt;|SSH + Ansible| app_a
+  control --&gt;|SSH + Ansible| app_b
+  control --&gt;|SSH + Ansible| app_c
+  control --&gt;|Terraform| object_storage
+  control -. Prometheus scrape .-&gt; app_a
+  control -. Prometheus scrape .-&gt; app_b
+  control -. Prometheus scrape .-&gt; app_c
+  control -. Prometheus scrape .-&gt; db_a
+  control -. Prometheus scrape .-&gt; db_b
+
+  ci --&gt;|push images| registry
+  app_a --&gt; db_a
+  app_b --&gt; db_b
+  app_a -.-&gt;|pull image| registry
+  app_b -.-&gt;|pull image| registry
+  app_c -.-&gt;|pull image| registry
+  db_a --&gt;|dump / backup| object_storage
+  db_b --&gt;|dump / backup| object_storage
+</code></pre> <h2 id="incentive">Incentive</h2> <p>The client’s ecosystem did not justify the expenses of AWS comforts – especially because the comforts come with many discomforts: most bigger companies hire employees who’s solemn responibility is keeping the system alive, the complexity of AWS (and in fact other IaaS-providers) has skyrocketed the past 10 years. The benefits for a large microservice ecosystem that requires 100% uptime with load balancing and kubernetes are evident. For smaller services the additional spendings are hardly ever worth: fixed-price Hetzner machines do the same work.</p> <p>The important bit is that the migration did not become a random collection of VPSes. Each host has a job:</p> <table> <thead> <tr> <th>Part</th> <th>Job</th> </tr> </thead> <tbody> <tr> <td>Edge proxy</td> <td>Terminates TLS and routes public traffic to private services.</td> </tr> <tr> <td>Control node</td> <td>Single operator entrypoint, bastion, Ansible runner, Terraform runner.</td> </tr> <tr> <td>App nodes</td> <td>Run service-specific Docker Compose stacks.</td> </tr> <tr> <td>DB nodes</td> <td>Run Postgres for the matching app.</td> </tr> <tr> <td>S3 Object storage</td> <td>Holds Terraform state, database dumps, file backups, and application assets where needed.</td> </tr> </tbody> </table> <p>That separation is cheap on Hetzner and useful in real life. You can restart an app without touching its database. You can rebuild a service host without opening SSH to the internet. You can explain the setup to the next person in ten minutes without drawing a pentagram.</p> <h2 id="terraform-infrastructure-setup">Terraform: Infrastructure Setup</h2> <p>Terraform handles the pieces that belong to the provider:</p> <ul> <li>SSH keys</li> <li>private network</li> <li>control node</li> <li>firewalls</li> <li>app and DB servers</li> <li>volumes where persistent app data needs a mounted disk</li> <li>object storage buckets and lifecycle rules</li> </ul> <p>The repository uses numbered Terraform stacks. That is not glamorous, but it makes dependency order obvious:</p> <pre><code class="language-mermaid">flowchart LR
+  setup[00 setup&lt;br/&gt;SSH keys + base objects]
+  network[01 network&lt;br/&gt;private network]
+  control[02 control&lt;br/&gt;bastion/control node]
+  firewalls[04 firewalls&lt;br/&gt;edge/app/db rules]
+  apps[06 apps&lt;br/&gt;app + db machines]
+  buckets[S3 buckets&lt;br/&gt;backup lifecycle]
+  state[(Hetzner Object Storage&lt;br/&gt;Terraform state)]
+
+  setup --&gt; control
+  setup --&gt; apps
+  network --&gt; control
+  network --&gt; firewalls
+  firewalls --&gt; apps
+  apps --&gt; buckets
+
+  setup -. state .-&gt; state
+  network -. state .-&gt; state
+  control -. state .-&gt; state
+  firewalls -. state .-&gt; state
+  apps -. state .-&gt; state
+</code></pre> <p>The nicest detail is the Terraform backend. State lives in Hetzner Object Storage through Terraform’s S3 backend. The config is basically this, with real names removed:</p> <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="p">{</span>
+  <span class="nx">backend</span> <span class="s2">"s3"</span> <span class="p">{</span>
+    <span class="nx">bucket</span> <span class="o">=</span> <span class="s2">"tf-state"</span>
+    <span class="nx">key</span>    <span class="o">=</span> <span class="s2">"network.tfstate"</span>
+    <span class="nx">region</span> <span class="o">=</span> <span class="s2">"region-a"</span>
+
+    <span class="nx">endpoints</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">s3</span> <span class="o">=</span> <span class="s2">"https://region-a.your-objectstorage.com"</span>
+    <span class="p">}</span>
+
+    <span class="nx">skip_requesting_account_id</span>  <span class="o">=</span> <span class="kc">true</span>
+    <span class="nx">skip_credentials_validation</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="nx">skip_metadata_api_check</span>     <span class="o">=</span> <span class="kc">true</span>
+    <span class="nx">skip_region_validation</span>      <span class="o">=</span> <span class="kc">true</span>
+  <span class="err">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>That works because Hetzner Object Storage is S3-compatible, but it is not AWS. Those skip flags matter. Without them, Terraform tries to ask AWS-flavoured questions that this backend does not answer.</p> <h2 id="ansible-application-setup">Ansible: Application Setup</h2> <p>The Ansible layout is the part I like most.</p> <p>There is one inventory for topology: these are the logical hosts and groups. Then there are separate connection profiles depending on where Ansible runs.</p> <p>From a workstation, Ansible reaches private hosts through the bastion:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># workstation profile
+</span><span class="nn">[bastion]</span>
+<span class="err">control</span> <span class="py">ansible_host</span><span class="p">=</span><span class="s">&lt;bastion-public-ip&gt;</span>
+
+<span class="nn">[nodes:vars]</span>
+<span class="py">ansible_user</span><span class="p">=</span><span class="s">root</span>
+<span class="py">ansible_ssh_common_args</span><span class="p">=</span><span class="s">-o ProxyJump=root@&lt;bastion-public-ip&gt;</span>
+<span class="py">ansible_ssh_private_key_file</span><span class="p">=</span><span class="s">~/.ssh/internal_ed25519</span>
+</code></pre></div></div> <p>From the control node itself, the same logical hosts can be reached directly over the private network:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># control-node profile
+[bastion]
+control ansible_connection=local
+
+[nodes:vars]
+ansible_user=root
+ansible_ssh_private_key_file=/home/ansible/.ssh/internal_ed25519
+</code></pre></div></div> <p>That sounds small until you have lived through the opposite. The opposite is five <code class="language-plaintext highlighter-rouge">README.md</code>s, three SSH aliases, and one person who knows which tunnel must be open during deploys.</p> <p>There is also a useful dynamic pattern: query the Hetzner API for a server, extract its private address, then add it to an in-memory Ansible inventory with <code class="language-plaintext highlighter-rouge">add_host</code>. That means reprovisioned nodes do not require hand-editing private IPs into playbooks.</p> <pre><code class="language-mermaid">sequenceDiagram
+  participant Laptop as Operator laptop
+  participant Control as Control node
+  participant API as Hetzner API
+  participant Target as Private app host
+
+  Laptop-&gt;&gt;API: look up control and target
+  API--&gt;&gt;Laptop: public control address + private target address
+  Laptop-&gt;&gt;Control: SSH ProxyJump
+  Control-&gt;&gt;Target: SSH over private network
+  Laptop-&gt;&gt;Target: Ansible tasks via bastion path
+
+  Note over Control,Target: When Ansible runs on the control node,&lt;br/&gt;the ProxyJump part disappears.
+</code></pre> <p>The roles are straightforward:</p> <ul> <li><code class="language-plaintext highlighter-rouge">base_os</code> upgrades packages.</li> <li><code class="language-plaintext highlighter-rouge">docker_host</code> installs Docker and Compose.</li> <li>service roles render <code class="language-plaintext highlighter-rouge">compose.yaml</code> and <code class="language-plaintext highlighter-rouge">.env</code>.</li> <li>secret-heavy templates use <code class="language-plaintext highlighter-rouge">no_log</code>.</li> <li>app containers bind to private interfaces.</li> <li>Caddy owns public TLS and routes traffic inward.</li> <li>Prometheus scrape targets and Grafana visibility are applied as part of the service deployment.</li> </ul> <h2 id="edge-proxy---a-single-entrypoint">Edge Proxy - a Single Entrypoint</h2> <p>For users, the single entrypoint is Caddy.</p> <p>Public DNS points at one edge proxy. Caddy handles TLS and routes subdomains and paths to private services. The apps do not need public ports. The databases definitely do not need public ports.</p> <p>In practice the public entrypoint is a floating IP, not the VM itself. Under normal conditions it sits on the primary Caddy node. If that node fails, automation moves the floating IP to a backup Caddy node with the same routing configuration. Users still hit the same DNS name and the same public address; the backing machine changes.</p> <p>For operators, the single entrypoint is the control node.</p> <p>That gives you two clean doors:</p> <table> <thead> <tr> <th>Door</th> <th>Who uses it</th> <th>What it reaches</th> </tr> </thead> <tbody> <tr> <td>Edge proxy</td> <td>Browsers and API clients</td> <td>Public web traffic only</td> </tr> <tr> <td>Control node</td> <td>Operators and automation</td> <td>SSH, Ansible, Terraform</td> </tr> </tbody> </table> <p>This is the kind of split I want in small infrastructure. Not because it looks nice in a diagram, but because it reduces the amount of “wait, why can I reach that box from here?” during incident work.</p> <h2 id="backups">Backups</h2> <p>The sane shape is:</p> <ul> <li>database dumps go to object storage;</li> <li>app files go to object storage where needed;</li> <li>lifecycle rules expire old backup objects;</li> <li>restore playbooks exist and are treated as part of the system, not as emergency folklore.</li> </ul> <p>Object storage is cheap enough that keeping backups there is an easy call. The hard part is discipline: test restores. A backup that has never been restored is no backup in production.</p> <p>The setup also keeps backup storage in a separate object storage location from the compute region where practical. That is a simple, useful habit. It does not make a multi-region HA system, but it gives you a better failure story than “the same VM had the data and the backup”.</p> <h2 id="why-this-saved-money">Why This Saved Money</h2> <p>The saving was around <strong>EUR 500 per month</strong> for this case.</p> <p>The reason was not one clever trick. It was a stack of boring changes:</p> <table> <thead> <tr> <th>Cost area</th> <th>AWS-style setup</th> <th>Hetzner setup</th> </tr> </thead> <tbody> <tr> <td>Relational database</td> <td>Managed database convenience, higher monthly baseline</td> <td>Self-managed Postgres on small nodes</td> </tr> <tr> <td>App hosting</td> <td>Cloud services sized and priced for broader needs</td> <td>Small fixed-size VMs</td> </tr> <tr> <td>Backups</td> <td>Provider snapshots and managed storage</td> <td>S3-compatible object storage with lifecycle rules</td> </tr> <tr> <td>Networking</td> <td>Hyperscaler pricing model</td> <td>Simpler private networking and edge proxy</td> </tr> </tbody> </table> <p>This does not mean “Hetzner is always cheaper” in some grand universal sense. If the client needs managed failover, point-in-time recovery, regional replication, a formal RTO, and a team that never wants to touch Postgres, AWS may still earn its money.</p> <p>Here, the workload was small enough and understandable enough that self-managed infrastructure made sense.</p> <h2 id="advantages">Advantages</h2> <p>The main advantage is cost, obviously. Cutting roughly EUR 500 per month matters for a small organization.</p> <p>While AWS may also be configured with IaC, Hetzner offers no advanced user-interface for deployments. Thus the second advantage is forced readability and portability. Terraform shows the provider resources, these can easily be adjusted to a new provider. Then, Ansible shows how machines are configured. Compose files show what each app runs. There is no hidden machinery.</p> <p>The third advantage is blast-radius control. App nodes, DB nodes, edge proxy, and control node have separate jobs. A broken app deploy does not need to become a broken database.</p> <p>The fourth advantage is portability. A PostgreSQL dump, an object storage bucket, and a Compose project are not exotic. This makes future migrations less dramatic.</p> <p>The fifth advantage is handover. Future operators can learn the shape from the repo instead of collecting server trivia from terminal history.</p> <h2 id="disadvantages">Disadvantages</h2> <p>You lose managed-service comfort.</p> <p>AWS managed databases are expensive partly because they do real work: snapshots, maintenance windows, easier restore flows, failover options, metrics, and fewer weird Saturday mornings. Moving to self-managed Postgres means you own that work.</p> <p>The edge entrypoint is better than a plain single VM because the floating IP moves to a backup Caddy node on failure. That still needs testing, alerting, and a boring runbook. Failover that nobody has watched happen is just optimism with a nicer diagram.</p> <p>The control node is also important. If it is down, the apps may keep running, but deploys and routine ops get annoying. That is acceptable for many small systems. It should be stated plainly.</p> <p>Terraform state in S3-compatible storage is practical, but state locking and apply discipline need attention.</p> <p>Docker Compose is a good fit here. It is not autoscaling, self-healing cluster magic. Again, good. But be honest about it.</p> <h2 id="the-actual-skill">The Actual Skill</h2> <p>The skill is not “I know Terraform” or “I know Ansible”. Plenty of people know the commands.</p> <p>The skill is drawing the line in the right place:</p> <ul> <li>Terraform creates infrastructure.</li> <li>Ansible configures machines.</li> <li>Caddy is the only public web door.</li> <li>The control node is the only operator door.</li> <li>Apps talk privately.</li> <li>Databases stay private.</li> <li>Backups leave the machine.</li> <li>The cost model matches the size of the client.</li> </ul>]]></content><author><name>Mathias Baumgartinger</name></author><category term="infrastructure"/><category term="software-engineering"/><category term="infrastructure"/><category term="devops"/><category term="terraform"/><category term="ansible"/><category term="hetzner"/><category term="aws"/><summary type="html"><![CDATA[Terraform, Ansible, one edge proxy, one bastion, and a cloud bill that stopped being silly.]]></summary></entry><entry><title type="html">Writing Scientific LaTeX from Markdown</title><link href="MathiasBaumgartinger.github.io/blog/2026/scientific-markdown/" rel="alternate" type="text/html" title="Writing Scientific LaTeX from Markdown"/><published>2026-03-03T00:00:00+00:00</published><updated>2026-03-03T00:00:00+00:00</updated><id>MathiasBaumgartinger.github.io/blog/2026/scientific-markdown</id><content type="html" xml:base="MathiasBaumgartinger.github.io/blog/2026/scientific-markdown/"><![CDATA[<h2 id="latex-boon-and-bane">LaTeX: Boon and Bane</h2> <p>Ever since I first encountered LaTeX during my bachelor’s, I loved the clean documents LaTeX produces. The algorithmic, global paragraphing that produces even spacing feels unmatched to this day. Additionally, if you ever tried writing math notation in an text-editor like Word, LaTeX’s math notation is far superior. Its integration with better bibLaTeX and Zotero greatly eases scientific writing.</p> <p>On the other hand, writing LaTeX – especially in living documents – can feel very cumbersome. The syntactic commands and control sequences like <code class="language-plaintext highlighter-rouge">\textbf{}</code>, <code class="language-plaintext highlighter-rouge">\begin{enumerate}</code> and especially figure and table blocks like the one below pollute the plain-text and sometimes feel unnecessarily long:</p> <div class="language-LaTeX highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">\begin{figure}</span>[h]
 
 <span class="nt">\begin{subfigure}</span><span class="p">{</span>0.5<span class="k">\textwidth</span><span class="p">}</span>
 <span class="k">\includegraphics</span><span class="na">[width=0.9\linewidth, height=6cm]</span><span class="p">{</span>overleaf-logo<span class="p">}</span>

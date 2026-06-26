@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-writing-scientific-latex-from-markdown",
+        },{id: "post-moving-a-small-production-stack-from-aws-to-hetzner",
+        
+          title: "Moving a Small Production Stack from AWS to Hetzner",
+        
+        description: "Terraform, Ansible, one edge proxy, one bastion, and a cloud bill that stopped being silly.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/aws-hetzner-mig/";
+          
+        },
+      },{id: "post-writing-scientific-latex-from-markdown",
         
           title: "Writing Scientific LaTeX from Markdown",
         
