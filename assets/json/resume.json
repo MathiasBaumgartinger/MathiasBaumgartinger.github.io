@@ -252,7 +252,8 @@
         "AWS Hosting",
         "NumPy / Pandas / GeoPandas",
         "CLI Geoprocessing (GDAL, ogr2ogr)",
-        "Git / GitHub"
+        "Git / GitHub",
+        "Terraform / Ansible"
       ]
     },
     {
